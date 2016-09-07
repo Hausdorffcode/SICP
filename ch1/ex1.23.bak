@@ -1,0 +1,6 @@
+#lang planet neil/sicp
+(load "prime.rkt")
+(define (next n)
+  (cond ((= n 2) 3)
+        ;;((even? n) (+ n 1))
+        (else (+ n 2))))

@@ -1,0 +1,27 @@
+#lang planet neil/sicp
+(define (sum term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ (term a) result))))
+  (iter a 0.0))
+
+(define (cube x)
+  (* x x x))
+
+(define (simpsom-integral f a b n)
+  (let (( h (/ (- b a) n)))
+    (define (next x)
+      (+ 1 x))
+    (define (factor x)
+      (cond ((= 0 x) 1)
+            ((= x n ) 1)
+            ((even? x) 2)
+            (else 4)))
+    (define (y x)
+      (f (+ a (* x h))))
+    (define (term x)
+      (* (factor x) (y x)))
+    (* (/ h 3) (sum term 0.0 next n))))
+(simpsom-integral cube 0 1 100)
+(simpsom-integral cube 0 1 10000)

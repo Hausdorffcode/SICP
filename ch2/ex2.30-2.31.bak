@@ -1,0 +1,45 @@
+#lang planet neil/sicp
+;ex2.30
+(define (square x)
+  (* x x))
+
+(define (square-tree tree)
+  (cond ((null? tree) nil)
+        ((not (pair? tree)) (square tree))
+        (else (cons (square-tree (car tree))
+                    (square-tree (cdr tree))))))
+
+(define (square-tree2 tree)
+  (map (lambda (sub-tree)
+         (if (pair? sub-tree)
+             (square-tree2 sub-tree)
+             (square sub-tree)))
+       tree))
+
+
+
+;ex2.31
+(define (tree-map proc tree)
+  (cond ((null? tree) nil)
+        ((not (pair? tree)) (proc tree))
+        (else (cons (tree-map proc (car tree))
+                    (tree-map proc (cdr tree))))))
+(define (square-tree3 tree)
+  (tree-map square tree))
+
+(define (tree-map2 proc tree)
+  (map (lambda (sub-tree)
+         (if (pair? sub-tree)
+             (tree-map2 proc sub-tree)
+             (proc sub-tree)))
+       tree))
+(define (square-tree4 tree)
+  (tree-map2 square tree))
+
+
+(define x (list 2 (list 3 (list 4 5) 6) (list 7 8)))
+x
+(square-tree x)
+(square-tree2 x)
+(square-tree3 x)
+(square-tree4 x)
